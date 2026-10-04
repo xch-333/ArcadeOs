@@ -958,6 +958,13 @@ body.arcade-turbo .arcade-running-bar,body.arcade-turbo #arcade-fps{backdrop-fil
         updateClocks();
 
         let desktopEffect = localStorage.getItem('arcadeos.desktopEffect') || 'sakura';
+        // Automatically enable Sakura on the first load of this version, even if an older
+        // version previously saved the effect as off.
+        if (!localStorage.getItem('arcadeos.sakuraAutoOnV2')) {
+            desktopEffect = 'sakura';
+            localStorage.setItem('arcadeos.desktopEffect', 'sakura');
+            localStorage.setItem('arcadeos.sakuraAutoOnV2', '1');
+        }
         if (desktopEffect === 'rain') { desktopEffect = 'off'; localStorage.setItem('arcadeos.desktopEffect', 'off'); }
         function createDesktopEffect(type) {
             const containers = [document.getElementById('sakura-container'), document.getElementById('lock-sakura-container')].filter(Boolean);
